@@ -14,6 +14,14 @@ function divide(a,b){
   return a / b;
 }
 
+function power(a,b){
+ return Math.pow(a,b);
+}
+
+function neg(a){
+  return a * -1;
+}
+
 function operate (op,a,b){
     if (op === '+'){
       return add(a,b);
@@ -26,6 +34,12 @@ function operate (op,a,b){
     }
     else if (op === '/'){
       return divide(a,b);
+    }
+    else if (op === '^'){
+      return power(a,b);
+    }
+    else if (op === '+/-'){
+      return neg(a);
     }    
 }
 
