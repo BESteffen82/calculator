@@ -45,11 +45,17 @@ function operate (op,a,b){
 
 let display = document.querySelector('.display');
 let number = document.querySelectorAll('.number-button');
+let numberValue;
+
 for (let i = 0; i < number.length; i++){
-number[i].onclick = function() {
-    display.textContent = `${this.value}`
-}
+  number[i].onclick = function() {
+    numberValue = `${this.value}`;      
+    display.textContent = numberValue;
+  }
 };
+
+
+
 
 
 
