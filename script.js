@@ -44,15 +44,35 @@ function operate (op,a,b){
 }
 
 let display = document.querySelector('.display');
-let number = document.querySelectorAll('.number-button');
+let numbers = document.querySelectorAll('.number-button');
+const numberDisplay = '';
 let numberValue;
+let counter = 0;
 
-for (let i = 0; i < number.length; i++){
-  number[i].onclick = function() {
-    numberValue = `${this.value}`;      
-    display.textContent = numberValue;
-  }
-};
+
+numbers.forEach((button) => {
+  button.onclick = () => {
+    numberValue = numberDisplay.concat(button.value);
+    display.textContent += numberValue;
+      };
+    });
+    
+
+   
+
+
+
+  
+  
+
+   
+
+
+
+  
+
+
+
 
 
 
