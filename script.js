@@ -40,24 +40,24 @@ function operate(op,a,b){
     }
 }
 
-const clear = document.getElementById('clear-button');
 const display = document.querySelector('.display');
 const numbers = document.querySelectorAll('.number-button');
 const operators = document.querySelectorAll('.operator-button');
 const equals = document.querySelector('.equal-button');
-let numberDisplay = '';
-let currentNumOne = '';
-let currentNumTwo = '';
-let a;
-let b;
+const negative = document.querySelector('.negative-button');
+let numOne = '';
+let numTwo = '';
 let op;
+let a = '';
+let b = '';
+let solution = '';
 
 function firstNumBtn(){
   numbers.forEach((button) => {
     button.onclick = () => {
-      currentNumOne += numberDisplay.concat(button.value);
-      display.innerText = currentNumOne;
-      a = parseInt(currentNumOne);                             
+      numOne += button.value;
+      display.innerText = numOne;                                       
+      a = parseFloat(numOne);      
     };
   });
 };
@@ -65,51 +65,79 @@ function firstNumBtn(){
 function secondNumBtn(){
 numbers.forEach((button) => {
     button.onclick = () => {
-      currentNumTwo += numberDisplay.concat(button.value);
-      display.innerText = currentNumTwo;
-      b = parseInt(currentNumTwo);                         
+      numTwo += button.value;
+      display.innerText = numTwo;                                      
+      b = parseFloat(numTwo);
+      console.log(parseFloat(operate(op,a,b)));                 
     };
   });
 };
 
+
 function firstOp (){
-  firstNumBtn();
+  firstNumBtn();  
   operators.forEach((button) => {
     button.onclick = () => {
-      if (button.id == 'plus'){
-        display.innerText = '';        
+      if (button.id == 'plus'){        
+        secondNumBtn();               
+        op = '+';        
+      } else if (button.id == 'minus'){        
         secondNumBtn();
-        op = '+';                                                                     
-      } else if (button.id == 'minus'){
-        display.innerText = '';
+        op = '-';                                       
+      } else if (button.id == 'multiply'){        
         secondNumBtn();
-        op = '-';
-      } else if (button.id == 'multiply'){
-        display.innerText = '';
-        secondNumBtn();
-        op = '*';
+        op = '*';        
       } else if (button.id == 'divide'){
-        display.innerText = '';
         secondNumBtn();
-        op = '/';
-      } else if (button.id == 'power'){
-        display.innerText = '';
+        op = '/';                                                       
+      } else if (button.id == 'power'){      
         secondNumBtn();
-        op = '^';       
-      };                   
+        op = '^';                                                           
+      }         
     };
   });
 }
 
-function calculate(){
-  firstOp(op);  
+function calculate(){      
+  firstOp();       
   equals.onclick = () => {
-  let calc = operate(op, a, b);
-  display.innerText = parseInt(calc);
-  };
+    if (b == 0 && op == '/'){
+     return display.innerText = "Can't do that jackass";
+    }        
+  let calc = operate(op, a, b);      
+  display.innerText = parseFloat(calc);      
+  };  
 };
 
 calculate();
+
+function clearDisplay(){
+clear.onclick = () => {
+  };
+}  
+function secondOp(){
+  firstOp();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
