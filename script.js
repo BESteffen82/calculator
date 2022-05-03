@@ -22,7 +22,7 @@ function neg(a){
   return a * -1;
 }
 
-function operate (op,a,b){
+function operate(op,a,b){
     if (op === '+'){
        return add(a,b);      
     }
@@ -50,14 +50,14 @@ let currentNumOne = '';
 let currentNumTwo = '';
 let a;
 let b;
+let op;
 
 function firstNumBtn(){
   numbers.forEach((button) => {
     button.onclick = () => {
       currentNumOne += numberDisplay.concat(button.value);
       display.innerText = currentNumOne;
-      a = parseInt(currentNumOne);
-      console.log(a);                         
+      a = parseInt(currentNumOne);                             
     };
   });
 };
@@ -67,8 +67,7 @@ numbers.forEach((button) => {
     button.onclick = () => {
       currentNumTwo += numberDisplay.concat(button.value);
       display.innerText = currentNumTwo;
-      b = parseInt(currentNumTwo);
-      console.log(b);                   
+      b = parseInt(currentNumTwo);                         
     };
   });
 };
@@ -78,33 +77,37 @@ function firstOp (){
   operators.forEach((button) => {
     button.onclick = () => {
       if (button.id == 'plus'){
-        display.innerText = '';
-        secondNumBtn();                                                             
+        display.innerText = '';        
+        secondNumBtn();
+        op = '+';                                                                     
       } else if (button.id == 'minus'){
         display.innerText = '';
         secondNumBtn();
-      } else if (button.id == 'multiple'){
+        op = '-';
+      } else if (button.id == 'multiply'){
         display.innerText = '';
         secondNumBtn();
+        op = '*';
       } else if (button.id == 'divide'){
         display.innerText = '';
         secondNumBtn();
+        op = '/';
       } else if (button.id == 'power'){
         display.innerText = '';
-        secondNumBtn();       
+        secondNumBtn();
+        op = '^';       
       };                   
     };
   });
 }
 
 function calculate(){
-  firstOp();
+  firstOp(op);  
   equals.onclick = () => {
-  display.innerText = '';
-  let c = operate('+', a, b);
-  display.innerText = parseInt(c);
+  let calc = operate(op, a, b);
+  display.innerText = parseInt(calc);
   };
-}
+};
 
 calculate();
 
