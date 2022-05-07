@@ -38,6 +38,8 @@ const numbers = document.querySelectorAll('.number-button');
 const operators = document.querySelectorAll('.operator-button');
 const equals = document.querySelector('.equal-button');
 const negative = document.querySelector('.negative-button');
+const clear = document.querySelector('.clear-button');
+const backspace = document.querySelector('.backspace-button');
 let argOne = '';
 let argTwo = '';
 let op = '';
@@ -48,6 +50,9 @@ let result = '';
 
 function updateDisplay(){
   display.innerText = displayValue;
+  if (displayValue.length > 15){
+    display.innerText = displayValue.substring(0,15);
+  };
 }
 
 updateDisplay();
@@ -55,7 +60,9 @@ updateDisplay();
 function firstNum(){
   for (let i = 0; i < numbers.length; i++){
   numbers[i].onclick = () => {
-      a += numbers[i].value;                 
+      a += numbers[i].value;
+      deleteNumA();
+      negA();        
       displayValue = a;          
       updateDisplay();                                                                       
     };
@@ -66,7 +73,8 @@ function secondNum(){
   for (let i = 0; i < numbers.length; i++){  
 numbers[i].onclick = () => {
       b += numbers[i].value;
-      console.log(b);                                                           
+      deleteNumB();
+      negB();                                                                 
       displayValue = b;      
       updateDisplay();               
     };
@@ -74,58 +82,101 @@ numbers[i].onclick = () => {
 };
 
 function operator(op){ 
-  firstNum();       
+  firstNum();         
   for (let i = 0; i < operators.length; i++){              
     operators[i].onclick = () => {
       if (b == '' && result == '') {
         secondNum();
         displayValue = a;
         updateDisplay();
-        op = operators[i].id;        
-        console.log(op);
+        op = operators[i].id;               
       }
-      if (b != '' && result === '') {
+      else if (b != '' && result === '') {
         displayValue = a;
-        updateDisplay();
+        updateDisplay();                
         result = operate(op, parseFloat(a), parseFloat(b));
-        op = operators[i].id;
-        console.log(op);        
-        displayValue = result;
-        console.log(result);
+          if (operators[0].id && b == '0'){
+          result = "epic fail!";
+          }        
+        op = operators[i].id;                    
+        displayValue = result;        
+        console.log(result);         
         updateDisplay();
         b = '';
       } else if (b !== '') {
         a = result;
         result = operate(op, parseFloat(a), parseFloat(b));
+          if (operators[0].id && b == '0'){
+          result = "epic fail!";
+          }        
         displayValue = result;
         updateDisplay();
         op = operators[i].id;
-        console.log(op);
-        console.log(result);
-        b = '';
+        b = '';        
       }
-
     };                  
   };
 };
 
-    
+
 operator();
+
+function clearDisplay(){
+  clear.onclick = () => {
+    a = '';
+    b = '';
+    result = ''
+    displayValue = '0';
+    updateDisplay();
+    operator(op);
+  }
+} 
+
+clearDisplay(); 
+
+function deleteNumA(){
+  backspace.onclick = () => {
+    displayValue = a.slice(0,-1);
+    a = displayValue;    
+    updateDisplay();
+    if (a === 0){
+      displayValue = 0
+    } else if (b === ''){
+      displayValue = 'enter number first';
+    }      
+  };
+}
+
+function deleteNumB(){
+  backspace.onclick = () => {
+    displayValue = b.slice(0,-1);
+    b = displayValue;    
     
-    
-    
-    
-    //function calculate(){      
-      //operator(); 
-      //equals.onclick = () => {
-        //displayValue = operate(op, parseFloat(a), parseFloat(b));        
-        //updateDisplay();
-        //};     
-      //};
-    
-      //calculate();
-                   
+    if (b === 0){
+      displayValue = 0
+    } else if (b === ''){
+      displayValue = 'enter number first';
+    }
+    updateDisplay();
+  };
+}
            
+function negA(){
+  negative.onclick = () => {
+    displayValue = (a * -1);
+    a = displayValue;
+    updateDisplay();
+  };  
+} 
+
+function negB(){
+  negative.onclick = () => {
+    displayValue = (b * -1);
+    b = displayValue;
+    updateDisplay();
+  };  
+}           
+   
      
                           
            
