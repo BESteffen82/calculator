@@ -182,7 +182,6 @@ function deleteNumB(){
   backspace.onclick = () => {
     displayValue = b.slice(0,-1);
     b = displayValue;    
-    
     if (b === 0){
       displayValue = 0
     } else if (b === ''){
@@ -214,13 +213,15 @@ document.addEventListener('keypress', (event) => {
     document.getElementById(`${event.key}`).click();
   } else if (event.key === 'Delete' || event.key === 'C' || event.key === 'c'){
     document.getElementById('clear').click();
-  } else if (event.key === 'Backspace'){
-    document.getElementById('backspace').click();
   } else if (event.key === 'Enter' || event.key === '='){
     document.getElementById('equal').click();
+  } else if (event.key === 'Backspace'){
+    document.getElementById('backspace').click();
   } else if (['+', '-', '*', '/'].includes(event.key)){
     document.getElementById(`${event.key}`).click();  
-  }  
+  } else if (event.key === '.'){
+    document.getElementById('.').click()
+  } 
 });
   
 
