@@ -40,6 +40,8 @@ const equals = document.querySelector('.equal-button');
 const negative = document.querySelector('.negative-button');
 const clear = document.querySelector('#clear');
 const backspace = document.querySelector('.backspace-button');
+const buttons = document.querySelectorAll('.buttons > .button');
+
 let argOne = '';
 let argTwo = '';
 let op = '';
@@ -49,18 +51,18 @@ displayValue = '0';
 let result = '';
 
 function updateDisplay(){
-  display.innerText = displayValue;
-  if (displayValue.length > 25){
-    display.innerText = displayValue.substring(0,25);
+  display.innerText = displayValue;  
+  if (displayValue.length > 12){
+    display.innerText = displayValue.substring(0,12);
   };
-}
+};  
 
 updateDisplay();
 
 function firstNum(){
   for (let i = 0; i < numbers.length; i++){
   numbers[i].onclick = () => {
-      a += numbers[i].value;
+      a += numbers[i].id;
       deleteNumA();
       negA();        
       displayValue = a;          
@@ -72,7 +74,7 @@ function firstNum(){
 function secondNum(){
   for (let i = 0; i < numbers.length; i++){  
 numbers[i].onclick = () => {
-      b += numbers[i].value;
+      b += numbers[i].id;
       deleteNumB();
       negB();                                                                 
       displayValue = b;         
@@ -87,37 +89,38 @@ function operator(){
     operators[i].onclick = () => {      
       if (b === '' && result === '') {
         secondNum();
-        displayValue = a;
+        displayValue = a.toString();
         updateDisplay();
         op = operators[i].id;                                                                                                                            
       } else if (b !== '' && result === '') {             
-        displayValue = a;        
+        displayValue = a.toString();        
         updateDisplay();                                     
         result = operate(op, parseFloat(a), parseFloat(b));
           if (operators[0].id && b == '0'){
-          result = "Epic Failure! Start Over";
+          result = "Epic Failure!";
           }        
         op = operators[i].id;                                                                
-        displayValue = result;                  
-        updateDisplay();                
+        displayValue = result.toString();                  
+        updateDisplay();
+        a = result;                
         b = '';
         } else if (b === '' && result === a ){
         secondNum();
-        displayValue = a;
+        displayValue = a.toString();
         updateDisplay();
         op = operators[i].id;                
       } else if (b !== '') {
         a = result;         
         result = operate(op, parseFloat(a), parseFloat(b));
           if (operators[0].id && b == '0'){
-            result = "Epic Failure! Start Over";
+            result = "Epic Failure!";
         displayValue = result;                                        
       } else if (op == 'equal'){
-        displayValue = a;        
+        displayValue = a.toString();        
         op = operators[i].id;             
         result = operate(op, parseFloat(a), parseFloat(b));         
           };       
-        displayValue = result;                   
+        displayValue = result.toString();                   
         updateDisplay();
         op = operators[i].id;
         b = '';             
@@ -134,16 +137,16 @@ function equalDisplay(){
     result = a;     
     result = operate(op, parseFloat(a), parseFloat(b));
       if (operators[0].id && b == '0'){
-        result = "Epic Fail! Start Over";        
+        result = "Epic Fail!";        
       };
       if (b == ''){
-        result = 'Clear And Start Over!';
+        result = 'Start Over!';
       }    
-    displayValue = result;
+    displayValue = result.toString();    
     updateDisplay();    
     a = result;
     b = '';      
-    operator()     
+    operator()        
   };
 };
 
@@ -205,10 +208,22 @@ function negB(){
   };  
 };           
    
-     
-                          
-           
-     
+document.addEventListener('keypress', (event) => {         
+  buttons.forEach((button) => {button.blur(); });
+  if (!Number.isNaN(+event.key) && event.key !== ''){
+    document.getElementById(`${event.key}`).click();
+  } else if (event.key === 'Delete' || event.key === 'C' || event.key === 'c'){
+    document.getElementById('clear').click();
+  } else if (event.key === 'Backspace'){
+    document.getElementById('backspace').click();
+  } else if (event.key === 'Enter' || event.key === '='){
+    document.getElementById('equal').click();
+  } else if (['+', '-', '*', '/'].includes(event.key)){
+    document.getElementById(`${event.key}`).click();  
+  }  
+});
+  
+
                               
            
                    
