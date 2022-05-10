@@ -38,7 +38,7 @@ const numbers = document.querySelectorAll('.number-button');
 const operators = document.querySelectorAll('.operator-button');
 const equals = document.querySelector('.equal-button');
 const negative = document.querySelector('.negative-button');
-const clear = document.querySelector('.clear-button');
+const clear = document.querySelector('#clear');
 const backspace = document.querySelector('.backspace-button');
 let argOne = '';
 let argTwo = '';
@@ -135,12 +135,15 @@ function equalDisplay(){
     result = operate(op, parseFloat(a), parseFloat(b));
       if (operators[0].id && b == '0'){
         result = "Epic Fail! Start Over";        
-      };    
+      };
+      if (b == ''){
+        result = 'Clear And Start Over!';
+      }    
     displayValue = result;
-    updateDisplay();
+    updateDisplay();    
     a = result;
-    b = '';        
-    operator();
+    b = '';      
+    operator()     
   };
 };
 
