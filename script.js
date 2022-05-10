@@ -50,8 +50,8 @@ let result = '';
 
 function updateDisplay(){
   display.innerText = displayValue;
-  if (displayValue.length > 20){
-    display.innerText = displayValue.substring(0,20);
+  if (displayValue.length > 25){
+    display.innerText = displayValue.substring(0,25);
   };
 }
 
@@ -89,24 +89,28 @@ function operator(){
         secondNum();
         displayValue = a;
         updateDisplay();
-        op = operators[i].id;                                                                                                                    
-      }
-      else if (b !== '' && result === '') {             
+        op = operators[i].id;                                                                                                                            
+      } else if (b !== '' && result === '') {             
         displayValue = a;        
         updateDisplay();                                     
         result = operate(op, parseFloat(a), parseFloat(b));
           if (operators[0].id && b == '0'){
-          result = "epic fail!";
+          result = "Epic Failure! Start Over";
           }        
         op = operators[i].id;                                                                
         displayValue = result;                  
         updateDisplay();                
-        b = '';                     
+        b = '';
+        } else if (b === '' && result === a ){
+        secondNum();
+        displayValue = a;
+        updateDisplay();
+        op = operators[i].id;                
       } else if (b !== '') {
         a = result;         
         result = operate(op, parseFloat(a), parseFloat(b));
           if (operators[0].id && b == '0'){
-            result = "epic fail!";
+            result = "Epic Failure! Start Over";
         displayValue = result;                                        
       } else if (op == 'equal'){
         displayValue = a;        
@@ -117,14 +121,30 @@ function operator(){
         updateDisplay();
         op = operators[i].id;
         b = '';             
-      }
-      console.log(result);
-      return result;      
+      }      
+      return result;            
     };                     
   };
 };
 
 operator();
+
+function equalDisplay(){
+  equals.onclick = () => {    
+    result = a;     
+    result = operate(op, parseFloat(a), parseFloat(b));
+      if (operators[0].id && b == '0'){
+        result = "Epic Fail! Start Over";        
+      };    
+    displayValue = result;
+    updateDisplay();
+    a = result;
+    b = '';        
+    operator();
+  };
+};
+
+equalDisplay();
 
 function clearDisplay(){
   clear.onclick = () => {
@@ -147,7 +167,7 @@ function deleteNumA(){
     if (a === 0){
       displayValue = 0
     } else if (b === ''){
-      displayValue = 'enter number first';
+      displayValue = 'Enter Number First';
     };      
   };
 };
@@ -160,7 +180,7 @@ function deleteNumB(){
     if (b === 0){
       displayValue = 0
     } else if (b === ''){
-      displayValue = 'enter number first';
+      displayValue = 'Enter Number First';
     }
     updateDisplay();
   };
