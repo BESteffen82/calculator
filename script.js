@@ -207,7 +207,7 @@ function negB(){
   };  
 };           
    
-document.addEventListener('keypress', (event) => {         
+document.addEventListener('keydown', (event) => {         
   buttons.forEach((button) => {button.blur(); });
   if (!Number.isNaN(+event.key) && event.key !== ''){
     document.getElementById(`${event.key}`).click();
